@@ -18,7 +18,7 @@ import unittest
 from transit.reader import Reader
 from transit.writer import Writer
 from transit.transit_types import Keyword, Symbol, URI, frozendict, TaggedValue, true, false
-from StringIO import StringIO
+from six import StringIO
 from transit.helpers import mapcat
 from helpers import ints_centered_on, hash_of_size, array_of_symbools
 from uuid import UUID
