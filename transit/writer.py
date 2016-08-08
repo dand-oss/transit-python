@@ -134,7 +134,8 @@ class Marshaler(object):
 
     def emit_array(self, a, _, cache):
         self.emit_array_start(len(a))
-        map(lambda x: self.marshal(x, False, cache), a)
+        for x in a:
+            self.marshal(x, False, cache)
         self.emit_array_end()
 
     # use map as object from above, have to overwrite default parser.
