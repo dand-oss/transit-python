@@ -23,6 +23,16 @@ import six
 JSON_ESCAPED_CHARS = set([six.unichr(c) for c in range(0x20)] + ['\\', '\n'])
 
 
+def json_esc(s):
+    sesc = "".join(
+        [
+            (c.encode('unicode_escape'))
+            if c in JSON_ESCAPED_CHARS
+            else c for c in s
+        ]).replace("\"", "\\\"")
+    return sesc
+
+
 class Writer(object):
     """The top-level object for writing out Python objects and converting them
     to Transit data.  During initialization, you must specify the protocol used
@@ -375,13 +385,7 @@ class JsonMarshaler(Marshaler):
         tp = type(obj)
         self.write_sep()
         if isinstance(obj, six.string_types):
-            self.io.write(u"\"")
-
-            # escapes in-line for perf
-            self.io.write(u"".join([(c.encode('unicode_escape'))
-                                    if c in JSON_ESCAPED_CHARS
-                                    else c for c in obj]).replace("\"", "\\\""))
-            self.io.write(u"\"")
+            self.io.write(u'\"{}\"'.format(json_esc(obj)))
         elif tp is float or tp is int or (six.PY2 and tp is long):
             self.io.write(str(obj))
         elif tp is bool:
