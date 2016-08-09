@@ -27,6 +27,7 @@ import dateutil
 from math import isnan
 import os
 import sys
+import six
 
 
 class ExemplarBaseTest(unittest.TestCase):
@@ -150,11 +151,16 @@ UUIDS = (UUID('5a2cbea3-e8c6-428b-b525-21239370dd55'),
          UUID('501a978e-3a3e-4060-b3be-1cf2bd4b1a38'),
          UUID('b3ba141a-a776-48e4-9fae-a28ea8571f58'))
 
+if six.PY2:
+    utf8_uri = u'http://www.詹姆斯.com/'
+else:
+    utf8_uri = b'http://www.\xc3\xa8\xc2\xa9\xc2\xb9\xc3\xa5\xc2\xa7\xe2\x80\xa0\xc3\xa6\xe2\x80\x93\xc2\xaf.com/'.decode()
+
 URIS = (
   URI(u'http://example.com'),
   URI(u'ftp://example.com'),
   URI(u'file:///path/to/file.txt'),
-  URI(u'http://www.詹姆斯.com/'))
+  URI(utf8_uri))
 
 epoch_utc = datetime.datetime.utcfromtimestamp(0).replace(
     tzinfo=dateutil.tz.tzutc())
