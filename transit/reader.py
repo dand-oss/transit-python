@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import json
-import sosjson
+from transit import sosjson
 import msgpack
-from decoder import Decoder
+from transit.decoder import Decoder
 from collections import OrderedDict
 
 
