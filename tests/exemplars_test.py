@@ -276,7 +276,7 @@ exemplar('vector_special_numbers', (float('nan'), float('inf'), float('-inf')))
 def make_hash_exemplar(n):
     exemplar('map_%s_nested' % (n,), {Keyword('f'): hash_of_size(n),
                                       Keyword('s'): hash_of_size(n)})
-map(make_hash_exemplar, [10, 1935, 1936, 1937])
+list(map(make_hash_exemplar, [10, 1935, 1936, 1937]))
 
 if __name__ == '__main__':
     unittest.main()
