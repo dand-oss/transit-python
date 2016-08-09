@@ -139,11 +139,13 @@ class BooleanHandler(object):
 
     @staticmethod
     def rep(b):
-        return bool(b)
+        val = b.v if type(b) == Boolean else bool(b)
+        return val
 
     @staticmethod
     def string_rep(b):
-        return 't' if b else 'f'
+        val = b.v if type(b) == Boolean else bool(b)
+        return 't' if val else 'f'
 
 
 class ArrayHandler(object):
