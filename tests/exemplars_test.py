@@ -123,14 +123,17 @@ def exemplar(name, val):
             except AssertionError as e:
                 if False not in [isnan(v) and isnan(d) or isnan(v) == isnan(d)
                                  for v, d in zip(val, data)]:
-                    return unittest.TestCase.assertEqual(
-                        self,
-                        filter(lambda x: not isnan(x), val),
-                        filter(lambda x: not isnan(x), data))
+                    try:
+                        return unittest.TestCase.assertEqual(
+                            self,
+                            list(six.moves.filter(lambda x: not isnan(x), val)),
+                            list(six.moves.filter(lambda x: not isnan(x), data)))
+                    except AssertionError as e:
+                        e.args += (name, 'failed')
+                        raise
                 else:
                     e.args += (name, 'failed')
                     raise
-
     globals()['test_{}_json'.format(name)] = ExemplarTest
 
 ARRAY_SIMPLE = (1, 2, 3)
