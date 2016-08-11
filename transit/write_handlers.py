@@ -131,6 +131,20 @@ class StringHandler(object):
     def string_rep(s):
         return s
 
+# py3 turn into strings
+class BytesHandler(object):
+    @staticmethod
+    def tag(s):
+        return 's'
+
+    @staticmethod
+    def rep(s):
+        return s.decode('utf-8')
+
+    @staticmethod
+    def string_rep(s):
+        return s.decode('utf-8')
+
 
 class BooleanHandler(object):
     @staticmethod
@@ -328,8 +342,11 @@ class WriteHandler(ClassDict):
         self[Boolean] = BooleanHandler
         # str on py3, unicode on py 2
         self[six.text_type] = StringHandler
+        # str on py2, bytes on py 3
         if six.PY2:
             self[str] = StringHandler
+        else:
+            self[bytes] = BytesHandler
         self[list] = ArrayHandler
         self[tuple] = ArrayHandler
         self[dict] = MapHandler

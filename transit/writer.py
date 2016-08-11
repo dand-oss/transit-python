@@ -29,7 +29,7 @@ def json_esc(s):
             (c.encode('unicode_escape'))
             if c in JSON_ESCAPED_CHARS
             else c for c in s
-        ]).replace("\"", "\\\"")
+        ]).replace('\"', '\\\"')
     return sesc
 
 
